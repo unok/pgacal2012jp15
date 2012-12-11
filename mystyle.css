@@ -1,0 +1,24 @@
+/*
+:Author: sakamotomsh
+:Contact: @sakamotomsh
+:Copyright: This stylesheet has been placed in the public domain.
+
+Stylesheet for use with Docutils.
+*/
+
+@import url(html4css1.css);
+
+/* Your customizations go here.  For example: */
+
+
+body {
+    margin: 40px 70px;
+    max-width: 52em;
+    min-width: 32em;
+}
+
+h1{
+    font-size: 150%;
+    font-weight: bold;
+    border-bottom:1px solid;
+}

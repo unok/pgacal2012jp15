@@ -1,0 +1,132 @@
+#!/usr/bin/env python
+"""pgbash: bash wrapper for setting up postgres envirionment (such as PATH, PGDATA...)
+"""
+import os, sys, re
+import glob, subprocess
+
+class PGBash(object):
+
+    def __init__(self, conf):
+        self.conf = conf
+        self._init_availables() #search ~/.pgbash/bin
+        self._init_psmap() #create hash for ps auxwww
+        self._init_ppmap() #create hash for lsof -U
+
+    def _init_availables(self):
+        self._availables = {}
+        glob_str = "%s/*/bin/postgres" % (self.conf["bin-prefix"],)
+        for pgpath in glob.glob(glob_str):
+            #/prefix/pgsql-9.1.3/bin/postgres
+            #            -3      -2    -1
+            self._availables[ pgpath.split("/")[-3] ] = []
+
+    def _init_ppmap(self):
+        self._ppmap = {}
+        popen = subprocess.Popen("lsof -U", shell=True, stdout=subprocess.PIPE)
+        popen.wait()
+        for line in popen.stdout:
+            try:
+                _,pid,_,_,_,_,_,_,name = line.split()
+                mo = re.search(r"^/tmp/\.s\.PGSQL",name)
+                if not mo:
+                    continue
+                pid = int(pid)
+                port = int(name.split(".")[-1])
+                self._ppmap[pid] = port
+            except Exception, e:
+                print e
+
+    def _init_psmap(self):
+        self._psmap = {}
+        popen = subprocess.Popen("ps auxwww", shell=True, stdout=subprocess.PIPE)
+        popen.wait()
+        for line in popen.stdout:
+            try:
+                pstuple = line.split(None,10)
+                pid  = int(pstuple[1])
+                name = pstuple[10]
+                mo = re.search(r"\.pgbash/bin/(pgsql-[^/]+)/bin/postgres$", name)
+                if mo:
+                    self._psmap[pid] = mo.group(1)
+            except Exception, e:
+                pass
+
+    def do_list(self):
+        self._retrieve_running_instances()
+
+        ordered_keys = sorted(self._availables.keys())
+        for key in ordered_keys:
+            if self._availables[key]:
+                extra_info = ",".join(["port=%d"%(x,) for x in self._availables[key] ])
+                print "[*] %s (%s)" %(key, extra_info)
+            else:
+                print "[ ] %s" % (key,)
+
+    def _retrieve_running_instances(self):
+        for pid, port in self._ppmap.iteritems():
+            if not pid in self._psmap:
+                continue
+            pgversion = self._psmap[pid]
+
+            if not pgversion in self._availables:
+                continue
+            self._availables[pgversion].append(port)
+
+    def do_pgbash(self):
+        conf = self.conf
+
+        # check version
+        pgversion = conf["args"][0]
+        pgpath = os.path.join(conf["bin-prefix"], pgversion, 'bin', 'postgres')
+        assert os.path.exists(pgpath)
+
+        # set data if provided
+        try:
+            data = int(conf["args"][1])
+            assert data < 3
+        except:
+            data = 1
+
+        self._do_pgbash(pgversion,data)
+
+    def _do_pgbash(self, pgversion,data=1):
+        env = os.environ
+        # set OS environment
+        env['PATH'] =  os.path.join(conf["bin-prefix"], pgversion, 'bin') + ":" + env['PATH'] 
+        env['PS1']  = '''(%s-%s)[\u@\W]\$ ''' % (pgversion, str(data))
+
+        port = 10000*data + 5432
+        try:
+            mo = re.search(r"pgsql-(\d+)\.(\d+)\.(\d+)", pgversion)
+            if mo:
+                port = 10000*data + 1000*int(mo.group(1)) + 100*int(mo.group(2)) +  int(mo.group(3)) 
+        except:
+            pass
+
+        # set PG environment
+        env['PGDATA'] =  os.path.join( conf["data-prefix"], "%s-%d"%(pgversion,data))
+        env['PGPORT'] = str(port)
+        env['PGUSER'] = 'postgres'
+        env['PGDATABASE'] = 'postgres'
+
+        #spawn bash and never returns....
+        os.execle('/bin/bash', env)
+
+if __name__ == '__main__':
+    import optparse
+    parser = optparse.OptionParser()
+    parser.add_option("-l", "--list", action="store_true", dest="do_list", default=False,)
+    opts, args = parser.parse_args()
+
+    conf = {
+        "opts":                 opts,
+        "args":                 args,
+        "bin-prefix":           os.path.expanduser("~/.pgbash/bin/"),
+        "data-prefix":          os.path.expanduser("~/.pgbash/data/"),
+    }
+
+    pgbash = PGBash(conf)
+    if conf["opts"].do_list:
+        pgbash.do_list()
+    else:
+        pgbash.do_pgbash()

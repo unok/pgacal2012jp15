@@ -1,0 +1,142 @@
+#!/usr/bin/env python
+"""pginstall: simple command to install multiple versions of PostgreSQL from source code.
+
+This script is very handy:
+    - requires no root-privilege
+    - requires no additional modules(only one file)
+
+It is highly recommended to use with pgbash.
+"""
+
+import os, sys, time, subprocess
+
+def usage():
+    return """Usage: %(script_name)s <version>, i.e. pginstall 9.1.3""" % {"script_name": __file__, }
+
+def check_syntax(conf):
+    #versions should be formatted as X.Y.Z or 'latest'
+    if conf["args"][0] == 'latest':
+        return 'latest'
+    try:
+        args = conf["args"]
+        x,y,z = args[0].split(".")
+        x,y,z = int(x), int(y), int(z)
+        return (x,y,z)
+    except:
+        raise Exception, "1st argument must be \d+.\d+.\d+"
+
+def check_repository(conf):
+    test_cmd = "(cd %s && git tag | grep REL9_0_0 )>/dev/null 2>&1" % (conf["git-repository"])
+    retcode = subprocess.call(test_cmd, shell=True)
+    if retcode != 0:
+        print """invalid repository. Try:
+
+  mkdir -p ~/.pgbash
+  cd ~/.pgbash
+  git clone https://github.com/postgres/postgres.git repo
+"""
+        sys.exit()
+
+def check_filesystem(conf):
+
+    #for now, if version == latest, no check
+    if conf["version"] == 'latest':
+        bindir = conf["prefix"]            % {"version_str":'latest'}
+        srcdir = conf["sourcecode-prefix"] % {"version_str":'latest'}
+        return srcdir, bindir
+
+    version = conf["version"]
+
+    version_str = ".".join([ str(x) for x in version] )
+
+    #check-1: Already installed?
+    bindir = conf["prefix"]            % {"version_str":version_str}
+    srcdir = conf["sourcecode-prefix"] % {"version_str":version_str}
+    for d in [bindir, srcdir]:
+        if os.path.exists(d):
+            raise Exception("%s must not exist"%(d,) )
+
+    #check-2: Have write privilege?
+    bin_pdir = os.path.dirname(conf["prefix"]% {"version_str":version_str})
+    src_pdir = os.path.dirname(conf["sourcecode-prefix"] % {"version_str":version_str})
+    for d in [bin_pdir, src_pdir]:
+        if os.path.isdir(d) is False:
+            print "%s must exist. Creating.."%(d,)
+            os.makedirs(d)
+        if os.access(d, os.W_OK) is False:
+            raise Exception("I do not have write privilege: %s"%(d,) )
+
+    #returns srcdir and bindir
+    return srcdir, bindir
+
+def check_tagname(conf):
+    if conf["version"] == 'latest':
+        return "HEAD"
+
+    # check if git-repo has the version
+    version = conf["version"]
+    gitrepo = conf["git-repository"]
+    tagname = "REL%d_%d_%d" % version
+
+    cmd = "cd %(gitrepo)s; git tag | grep %(tagname)s >/dev/null 2>/dev/null" % locals()
+    check_code = subprocess.call(cmd, shell=True)
+    assert check_code == 0
+
+    return tagname
+
+def main(conf):
+    check_repository(conf)
+
+    try:
+        version = check_syntax(conf)
+        conf["version"] = version
+
+        srcdir, bindir = check_filesystem(conf)
+        conf["srcdir"] = srcdir
+        conf["bindir"] = bindir
+
+        tagname = check_tagname(conf)
+        conf["tagname"] = tagname
+    except Exception,e :
+        print "[ERROR]", e
+        print usage()
+        sys.exit()
+
+    # Everythings seems ok, lets go
+    installcmds = [
+        "cd %s"                         % (conf["git-repository"]) ,
+        "mkdir %s"                      % (conf["srcdir"]),
+        "git archive %s | tar -x -C %s" % (conf["tagname"], conf["srcdir"]),
+        "cd %s"                         % (conf["srcdir"], ) ,
+        "./configure --prefix=%s --enable-debug" % (conf["bindir"]),
+        "make; make install",
+        "cd contrib ; make; make install;",
+    ]
+    if conf["version"] == 'latest':
+        installcmds.insert(0,"rm -rf %s" % conf["srcdir"])
+        installcmds.insert(0,"rm -rf %s" % conf["bindir"])
+    cmds = ";".join(installcmds)
+
+    print "="*70
+    print "  pginstall generated the following install scripts"
+    print "="*70
+    print 
+
+    for line in cmds.split(";"):
+        print line.strip()
+
+    if raw_input("The above commands will be executed. OK?[y/N] ") == 'y':
+        subprocess.call(cmds, shell=True)
+
+if __name__ == '__main__':
+    import optparse
+    parser = optparse.OptionParser()
+    opts, args = parser.parse_args()
+    conf = {
+        "opts":                 opts,
+        "args":                 args,
+        "git-repository":       os.path.expanduser("~/.pgbash/repo"),
+        "prefix":               os.path.expanduser("~/.pgbash/bin/pgsql-%(version_str)s"),
+        "sourcecode-prefix":    os.path.expanduser("~/.pgbash/src/pgsql-%(version_str)s"),
+    }
+    main(conf)

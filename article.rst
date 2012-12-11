@@ -95,14 +95,18 @@ pginstall: インストール簡略化スクリプト
 スクリプトの全体は `pginstall`_ に記載しました. 
 pythonで作った100行ちょっとのスクリプトです. 
 /usr/bin などPATHが通っている場所に配置すると
-本当に簡単にPostgreSQLをインストールできます.使い方はこうです::
+本当に簡単にPostgreSQLをインストールできます.使い方はこうです
+
+.. code:: bash
 
     $ pginstall 8.4.12
 
 .. _`pginstall`: https://github.com/sakamotomsh/pgacal2012jp15/blob/master/pginstall
 .. _`pgbash`: https://github.com/sakamotomsh/pgacal2012jp15/blob/master/pgbash
 
-中で動くコマンドの動作を少し見てみましょう.::
+中で動くコマンドの動作を少し見てみましょう.
+
+.. code:: bash
 
     #ソースコードの抽出
     cd /home/pgacal2012jp15/.pgbash/repo
@@ -197,7 +201,9 @@ Ver9.2.1を立ち上げてみます.::
 最近リリースされたPostgreSQLの 9.2.2 を新規にインストールして,
 同期レプリケーションをクラスタを組んでみましょう. 
 といっても, 以下をこぴぺするだけです.
-一杯のコーヒーを飲む時間もなく, クラスタが構築できました::
+一杯のコーヒーを飲む時間もなく, クラスタが構築できました
+
+.. code:: bash
     
     TARGET_VERSION=9.2.2
     ENV_ID=pgsql-$TARGET_VERSION

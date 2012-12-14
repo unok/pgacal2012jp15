@@ -1,1 +1,685 @@
-test
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.9.1: http://docutils.sourceforge.net/" />
+<title>複数のバージョンをインストールし, 自由自在に操ろう</title>
+<meta name="author" content="sakamotomsh" />
+<meta name="date" content="2012-12-15" />
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 7056 2011-06-17 10:50:48Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left, object.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right, object.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block, pre.math {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+<style type="text/css">
+
+.hll { background-color: #ffffcc }
+ { background: #f8f8f8; }
+.c { color: #408080; font-style: italic } /* Comment */
+.err { border: 1px solid #FF0000 } /* Error */
+.k { color: #008000; font-weight: bold } /* Keyword */
+.o { color: #666666 } /* Operator */
+.cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.cp { color: #BC7A00 } /* Comment.Preproc */
+.c1 { color: #408080; font-style: italic } /* Comment.Single */
+.cs { color: #408080; font-style: italic } /* Comment.Special */
+.gd { color: #A00000 } /* Generic.Deleted */
+.ge { font-style: italic } /* Generic.Emph */
+.gr { color: #FF0000 } /* Generic.Error */
+.gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.gi { color: #00A000 } /* Generic.Inserted */
+.go { color: #808080 } /* Generic.Output */
+.gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.gs { font-weight: bold } /* Generic.Strong */
+.gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.gt { color: #0040D0 } /* Generic.Traceback */
+.kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.kp { color: #008000 } /* Keyword.Pseudo */
+.kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.kt { color: #B00040 } /* Keyword.Type */
+.m { color: #666666 } /* Literal.Number */
+.s { color: #BA2121 } /* Literal.String */
+.na { color: #7D9029 } /* Name.Attribute */
+.nb { color: #008000 } /* Name.Builtin */
+.nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.no { color: #880000 } /* Name.Constant */
+.nd { color: #AA22FF } /* Name.Decorator */
+.ni { color: #999999; font-weight: bold } /* Name.Entity */
+.ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.nf { color: #0000FF } /* Name.Function */
+.nl { color: #A0A000 } /* Name.Label */
+.nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.nt { color: #008000; font-weight: bold } /* Name.Tag */
+.nv { color: #0000FF } /* Name.Variable */
+.ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.w { color: #bbbbbb } /* Text.Whitespace */
+.mf { color: #666666 } /* Literal.Number.Float */
+.mh { color: #666666 } /* Literal.Number.Hex */
+.mi { color: #666666 } /* Literal.Number.Integer */
+.mo { color: #666666 } /* Literal.Number.Oct */
+.sb { color: #BA2121 } /* Literal.String.Backtick */
+.sc { color: #BA2121 } /* Literal.String.Char */
+.sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.s2 { color: #BA2121 } /* Literal.String.Double */
+.se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.sh { color: #BA2121 } /* Literal.String.Heredoc */
+.si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.sx { color: #008000 } /* Literal.String.Other */
+.sr { color: #BB6688 } /* Literal.String.Regex */
+.s1 { color: #BA2121 } /* Literal.String.Single */
+.ss { color: #19177C } /* Literal.String.Symbol */
+.bp { color: #008000 } /* Name.Builtin.Pseudo */
+.vc { color: #19177C } /* Name.Variable.Class */
+.vg { color: #19177C } /* Name.Variable.Global */
+.vi { color: #19177C } /* Name.Variable.Instance */
+.il { color: #666666 } /* Literal.Number.Integer.Long */
+
+</style>
+<style type="text/css">
+
+/*
+:Author: sakamotomsh
+:Contact: @sakamotomsh
+:Copyright: This stylesheet has been placed in the public domain.
+
+Stylesheet for use with Docutils.
+*/
+
+
+/* Your customizations go here.  For example: */
+
+
+body {
+    margin: 40px 70px;
+    max-width: 52em;
+    min-width: 32em;
+}
+
+h1{
+    font-size: 150%;
+    font-weight: bold;
+    border-bottom:1px solid;
+}
+
+pre{
+
+    background-color: #ddddff;
+}
+
+</style>
+</head>
+<body>
+<div class="document" id="id1">
+<h1 class="title">複数のバージョンをインストールし, 自由自在に操ろう</h1>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr><th class="docinfo-name">Author:</th>
+<td>sakamotomsh</td></tr>
+<tr><th class="docinfo-name">Date:</th>
+<td>2012-12-15</td></tr>
+</tbody>
+</table>
+<!-- coding:sjis -->
+<div class="section" id="id2">
+<h1>1&nbsp;&nbsp;&nbsp;はじめに</h1>
+<p>本記事は <a class="reference external" href="http://atnd.org/events/34176">PostgreSQL Advent Calender 2012</a> の12/15 用の記事です。
+私のgithub上のレポジトリ <a class="reference external" href="https://github.com/sakamotomsh/pgacal2012jp15">pgacal2012jp15</a> を使い,
+github:pagesの機能でホスティングしています。</p>
+</div>
+<div class="section" id="id3">
+<h1>2&nbsp;&nbsp;&nbsp;目標</h1>
+<ul class="simple">
+<li>一つのサーバに,</li>
+<li>複数のバージョンのPostgreSQLをインストールし,</li>
+<li>自由自在に切り替えて使う方法を紹介/提案します。</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h1>3&nbsp;&nbsp;&nbsp;イントロダクション</h1>
+<p>私は某システム会社でPostgreSQLの問い合わせ業務をしています。
+問い合わせ業務ではスピードが命です。
+問い合わせを受け付けてから環境構築をし, 問題解析をして, 回答をつくり....
+そんなことをやっていると時間がいくらあっても足りません。</p>
+<p>そんな中, 私や同僚の多くは環境構築の自動化などのテクニックを持っています。
+今日はそのうちの一つとして, 私が使っている <strong>「一つのサーバに複数のPostgreSQL
+をインストールし, 自由自在に環境を切り替える方法」</strong> を紹介します。</p>
+<p>応用例として <strong>「同期レプリケーションクラスタがとてもに簡単にできること」</strong>
+をデモンストレーションします。</p>
+<p><em>注記</em>: 本記事と非常に似た目的のソフトウェアとして <a class="reference external" href="https://github.com/guedes/pgvm">pgvm</a> があります。 皆さん考えることは一緒ですね..</p>
+</div>
+<div class="section" id="id5">
+<h1>4&nbsp;&nbsp;&nbsp;技術的な要素</h1>
+<ul>
+<li><dl class="first docutils">
+<dt>ソースコードの入手</dt>
+<dd><p class="first last">PostgreSQLは <a class="reference external" href="http://git.postgresql.org/gitweb/?p=postgresql.git;a=summary">gitでソースコード管理</a> されています。 そして各バージョンは明解な
+命名規約に基づいたタグ名が付与されています。  そのため, cloneしたローカルの
+gitレポジトリから <strong>「システマティックに」</strong> 任意のバージョンのソースコードを入手できます。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>コンパイル/インストール</dt>
+<dd><p class="first last">configure時にprefixオプションでインストール先を付与すると,
+一つのサーバにいくらでもPostgreSQLをインストールすることができます。
+その際に--enable-debugなど解析に役立つオプションをつけることができます。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>環境の分離/切り替え</dt>
+<dd><p class="first">PostgreSQLはインストールしただけでは使えません。
+同居するPostgreSQLどうしの使用するポート番号がかぶらないようにしたり
+適切なPATH設定をして目的のバージョンのpg_ctlを呼び出したり,
+initdbするデータベース領域を確保したりする必要があります。</p>
+<p>一般的な言い方をすると <strong>「環境の切り替え」</strong> が必要となります。
+pythonのvirtualenvでいうactivate, node.jsのnvmにおけるuseに相当する機能です。
+PostgreSQLの場合, <strong>「基本的に環境変数を設定するだけ」</strong> で環境を分離できます。</p>
+<ul class="simple">
+<li>PATH環境変数: 操作対象のバージョンのpg_ctl/psqlを見つけられるように設定</li>
+<li>PGDATA環境変数: バージョンごとに違うデータ領域を設定</li>
+<li>PGPORT環境変数: 同一サーバで動作させた際にポート番号の重複をしないように設
+定(本来はpostgresql.confのportで設定すべきですが, pg_ctlだけでなく
+psqlなどのクライアントアプリケーションが暗黙的に接続するポート番号を
+設定できるというメリットのため環境変数で設定します)</li>
+</ul>
+<p class="last">これらの環境変数をセットしてbashを <a class="reference external" href="http://linuxjm.sourceforge.jp/html/LDP_man-pages/man3/exec.3.html">exec</a> してあげるプログラムを作るとよさそうです。
+ついでにPS1環境変数をいじってあげて, 現在どのバージョンを使っているかをわかりやすく表示
+するのもよいでしょう。</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>こうした経緯で, 私が作成したのが二つのプログラム <a class="reference external" href="https://github.com/sakamotomsh/pgacal2012jp15/blob/master/pginstall">pginstall</a> と <a class="reference external" href="https://github.com/sakamotomsh/pgacal2012jp15/blob/master/pgbash">pgbash</a> です。
+前者はインストールを簡略化し, 後者は環境切替を簡略化します。</p>
+<p>以下実装を記載しますが, 技術的な部分は以上でカバーしたので,
+この先は興味のある方のみ読み進めてください。
+また, 自分なりのツールを自作しても面白いと思います。
+ぜひチャレンジしてみてください。</p>
+</div>
+<div class="section" id="pginstall">
+<h1>5&nbsp;&nbsp;&nbsp;pginstall: インストール簡略化スクリプト</h1>
+<p>スクリプトの全体は <a class="reference external" href="https://github.com/sakamotomsh/pgacal2012jp15/blob/master/pginstall">pginstall</a> に記載しました。
+pythonで作った100行ちょっとのスクリプトです。
+/usr/bin などPATHが通っている場所に配置すると
+本当に簡単にPostgreSQLをインストールできます。使い方はこうです</p>
+<pre class="code bash literal-block">
+<span class="nv">$ </span>pginstall 8.4.12
+</pre>
+<p>中で動くコマンドの動作を少し見てみましょう。</p>
+<pre class="code bash literal-block">
+<span class="c">#ソースコードの抽出
+</span><span class="nb">cd</span> /home/pgacal2012jp15/.pgbash/repo
+mkdir /home/pgacal2012jp15/.pgbash/src/pgsql-8.4.12
+git archive REL8_4_12 | tar -x -C /home/pgacal2012jp15/.pgbash/src/pgsql-8.4.12
+
+<span class="c">#コンパイルとインストール
+</span><span class="nb">cd</span> /home/pgacal2012jp15/.pgbash/src/pgsql-8.4.12
+./configure --prefix<span class="o">=</span>/home/pgacal2012jp15/.pgbash/bin/pgsql-8.4.12 --enable-debug
+make; make install
+<span class="nb">cd </span>contrib; make ; make install
+</pre>
+<p>つまりgit archiveコマンドでインストール対象のバージョンのソースコードを抜き出し
+て, configureする際にprefixを指定してインストールするだけの簡単な作業です。</p>
+<p>いくつか補足です。PostgreSQLのレポジトリとして $HOME/.pgbash/repo を使います。
+なければgit cloneするよう指示されます。ソースコード, インストールバイナリなど
+全てのデータは $HOME/.pgbash 配下に置かれます。</p>
+<p>このように一台のマシンに複数のPostgreSQLをインストールするのはとても簡単です。
+システマティックにPostgreSQLをインストールできるようになると,
+「ちょっと別バージョンで動かしてみるか」と思えるようになります。
+<strong>このような心理状態になるのが一番の効能です</strong>.みなさんもぜひ試してみて下さい。</p>
+</div>
+<div class="section" id="id7">
+<h1>6&nbsp;&nbsp;&nbsp;pgbash: 環境切替シェル</h1>
+<p>環境切り替えに関しては, 実現するべき機能が複数あります。</p>
+<ul class="simple">
+<li>機能A: どのバージョンが使えるか一覧化する/どのバージョンが起動しているかを表示する</li>
+<li>機能B: 環境を切り替える(bashをexecする)</li>
+</ul>
+<p>機能Aは以下のようにつかいます:</p>
+<pre class="literal-block">
+$ pgbash -l
+[ ] pgsql-8.4.10
+[*] pgsql-8.4.12 (port=18412,port=28412)
+[ ] pgsql-8.4.5
+[ ] pgsql-9.0.2
+[*] pgsql-9.0.7 (port=19007)
+[ ] pgsql-9.1.5
+[ ] pgsql-9.2.0
+[ ] pgsql-9.2.1
+</pre>
+<p>この環境では, 結構いろいろなバージョンがインストールされていることがわかります。
+ここで[*]は現在そのバージョンのサーバが起動中であることをあらわします。
+Ver8.4.12のインスタンスが2つ, Ver9.0.7のインスタンスが1つあがっているようです。
+実はこの表示をするのが大変でした. lsofコマンドでPostgreSQLのドメインソケット一覧と
+それを保持しているPIDの対応を基点に, psコマンドでpostmasterのプログラムパスから
+どのバージョンがどのポートで動作しているのかを推定しています。</p>
+<p>機能Bは, 先ほど述べたように, 環境変数を設定してbashを立ち上げるだけの
+プログラムです。</p>
+<p>Ver9.2.1を立ち上げてみます:</p>
+<pre class="literal-block">
+$ pgbash pgsql-9.2.1
+(pgsql-9.2.1-1)[pgacal2012jp15&#64;~]$ pg_ctl start
+server starting
+(pgsql-9.2.1-1)[pgacal2012jp15&#64;~]$ pgbash -l
+[ ] pgsql-8.4.10
+[*] pgsql-8.4.12 (port=18412,port=28412)
+[ ] pgsql-8.4.5
+[ ] pgsql-9.0.2
+[*] pgsql-9.0.7 (port=19007)
+[ ] pgsql-9.1.5
+[ ] pgsql-9.2.0
+[*] pgsql-9.2.1 (port=19201) ★ここが起動した
+</pre>
+<p>このように新たにbashが立ち上がり, pg_ctl などをバージョンを意識せずに打つことが
+できます。実際に正しくパスが設定されているか？等を確認してみましょう:</p>
+<pre class="literal-block">
+(pgsql-9.2.1-1)[pgacal2012jp15&#64;~]$ psql -c &quot;select version()&quot;
+                                                   version
+--------------------------------------------------------------------------------------------------------------
+ PostgreSQL 9.2.1 on x86_64-unknown-linux-gnu, compiled by gcc (GCC) 4.4.6 20120305 (Red Hat 4.4.6-4), 64-bit
+(1 row)
+
+(pgsql-9.2.1-1)[pgacal2012jp15&#64;~]$ which psql
+~/.pgbash/bin/pgsql-9.2.1/bin/psql
+(pgsql-9.2.1-1)[pgacal2012jp15&#64;~]$ echo $PGDATA $PGPORT
+/home/pgacal2012jp15/.pgbash/data/pgsql-9.2.1-1 19201
+</pre>
+<p>このように、バージョンを切り替えてPostgreSQLを思うがままに扱えます。</p>
+</div>
+<div class="section" id="id8">
+<h1>7&nbsp;&nbsp;&nbsp;ミッション: 同期レプリケーションクラスタを構築せよ</h1>
+<p>最近リリースされたPostgreSQLの 9.2.2 を新規にインストールして,
+同期レプリケーションをクラスタを組んでみましょう。
+といっても, 以下をこぴぺするだけです。
+一杯のコーヒーを飲む時間もなく, クラスタが構築できました</p>
+<pre class="code bash literal-block">
+<span class="nv">TARGET_VERSION</span><span class="o">=</span>9.2.2
+<span class="nv">ENV_ID</span><span class="o">=</span>pgsql-<span class="nv">$TARGET_VERSION</span>
+
+<span class="c">#Install ##################################################################
+</span>yes | pginstall <span class="nv">$TARGET_VERSION</span>
+
+<span class="c">#Setup Master##############################################################
+</span>pgbash <span class="nv">$ENV_ID</span> 1
+rm -rf <span class="nv">$PGDATA</span>
+initdb --no-locale -U postgres
+cat <span class="s">&lt;&lt; EOF &gt;&gt; $PGDATA/postgresql.conf
+wal_level = hot_standby
+max_wal_senders = 3
+hot_standby = on
+EOF</span>
+cat <span class="s">&lt;&lt; EOF &gt;&gt; $PGDATA/pg_hba.conf
+host replication postgres 0.0.0.0/0 trust
+host replication postgres ::1/0 trust
+EOF</span>
+pg_ctl -w start
+pgbench -i
+<span class="nb">exit</span>
+
+<span class="c">#Setup Standby############################################################
+</span>pgbash <span class="nv">$ENV_ID</span> 2
+pg_basebackup -x -c fast -D <span class="nv">$PGDATA</span> -h localhost -p <span class="sb">`</span>expr <span class="nv">$PGPORT</span> - 10000<span class="sb">`</span>
+cat <span class="s">&lt;&lt; EOF &gt;&gt; $PGDATA/recovery.conf
+standby_mode = 'on'
+primary_conninfo = 'host=localhost port=`expr $PGPORT - 10000` user=postgres application_name=sby01'
+EOF</span>
+pg_ctl -w start
+<span class="nb">exit</span>
+
+<span class="c">#Start Replication #######################################################
+</span>pgbash <span class="nv">$ENV_ID</span> 1
+<span class="nb">echo</span> <span class="s2">&quot;synchronous_standby_names = '*'&quot;</span> &gt;&gt; <span class="nv">$PGDATA</span>/postgresql.conf
+pg_ctl -w restart
+<span class="nb">exit</span>
+</pre>
+<p>確かめてみます:</p>
+<pre class="literal-block">
+$ pgbash -l
+[ ] pgsql-8.4.10
+[*] pgsql-8.4.12 (port=18412,port=28412)
+[ ] pgsql-8.4.5
+[ ] pgsql-9.0.2
+[*] pgsql-9.0.7 (port=19007)
+[ ] pgsql-9.1.5
+[ ] pgsql-9.2.0
+[*] pgsql-9.2.1 (port=19201)
+[*] pgsql-9.2.2 (port=19202,port=29202)
+
+$ pgbash pgsql-9.2.2
+(pgsql-9.2.2-1)[pgacal2012jp15&#64;~]$ psql -xc &quot;select * from pg_stat_replication&quot;
+-[ RECORD 1 ]----+------------------------------
+pid              | 28019
+usesysid         | 10
+usename          | postgres
+application_name | sby01
+client_addr      | ::1
+client_hostname  |
+client_port      | 43608
+backend_start    | 2012-12-12 00:08:13.220873+09
+state            | streaming
+sent_location    | 0/4000080
+write_location   | 0/4000080
+flush_location   | 0/4000080
+replay_location  | 0/4000080
+sync_priority    | 1
+sync_state       | sync
+</pre>
+</div>
+<div class="section" id="id9">
+<h1>8&nbsp;&nbsp;&nbsp;最後に</h1>
+<p>ルーチンを定型化/自動化することでこころにゆとりが生まれます。
+生まれたゆとりで, 真の意味で生産性が求められることに心を使いましょう。</p>
+<p>明日12/16はyohgakiさんです.</p>
+<!-- vim: tw=80 : -->
+</div>
+</div>
+</body>
+</html>

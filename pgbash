@@ -22,7 +22,7 @@ class PGBash(object):
 
     def _init_ppmap(self):
         self._ppmap = {}
-        popen = subprocess.Popen("lsof -U", shell=True, stdout=subprocess.PIPE)
+        popen = subprocess.Popen("/usr/sbin/lsof -U", shell=True, stdout=subprocess.PIPE)
         popen.wait()
         for line in popen.stdout:
             try:

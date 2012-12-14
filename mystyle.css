@@ -21,3 +21,8 @@ h1{
     font-weight: bold;
     border-bottom:1px solid;
 }
+
+pre{
+
+    background-color: #ddddff;
+}

@@ -14,7 +14,7 @@ class PGBash(object):
 
     def _init_availables(self):
         self._availables = {}
-        glob_str = "%s/*/bin/postgres" % (self.conf["bin-prefix"],)
+        glob_str = "%s*/bin/postgres" % (self.conf["bin-prefix"],)
         for pgpath in glob.glob(glob_str):
             #/prefix/pgsql-9.1.3/bin/postgres
             #            -3      -2    -1
@@ -22,12 +22,14 @@ class PGBash(object):
 
     def _init_ppmap(self):
         self._ppmap = {}
-        popen = subprocess.Popen("/usr/sbin/lsof -U", shell=True, stdout=subprocess.PIPE)
-        popen.wait()
+        popen = subprocess.Popen("/usr/sbin/lsof -u unok", close_fds=True, shell=True, stdout=subprocess.PIPE)
+#        popen.wait()
         for line in popen.stdout:
             try:
-                _,pid,_,_,_,_,_,_,name = line.split()
-                mo = re.search(r"^/tmp/\.s\.PGSQL",name)
+                if len(line.split()) < 8:
+                    continue
+                _,pid,_,_,_,_,_,name = line.split()[:8]
+                mo = re.search('^/tmp/\.s\.PGSQL',name)
                 if not mo:
                     continue
                 pid = int(pid)
@@ -38,14 +40,14 @@ class PGBash(object):
 
     def _init_psmap(self):
         self._psmap = {}
-        popen = subprocess.Popen("ps auxwww", shell=True, stdout=subprocess.PIPE)
-        popen.wait()
+        popen = subprocess.Popen("ps auxwww", close_fds=True, shell=True, stdout=subprocess.PIPE)
+#        popen.wait()
         for line in popen.stdout:
             try:
                 pstuple = line.split(None,10)
                 pid  = int(pstuple[1])
                 name = pstuple[10]
-                mo = re.search(r"\.pgbash/bin/(pgsql-[^/]+)/bin/postgres$", name)
+                mo = re.search('\.pgbash/bin/(pgsql\-[^/]+)/bin/post(master|gres)', name)
                 if mo:
                     self._psmap[pid] = mo.group(1)
             except Exception, e:
@@ -77,7 +79,7 @@ class PGBash(object):
 
         # check version
         pgversion = conf["args"][0]
-        pgpath = os.path.join(conf["bin-prefix"], pgversion, 'bin', 'postgres')
+        pgpath = os.path.join(conf["bin-prefix"], 'pgsql-' + pgversion, 'bin', 'postgres')
         assert os.path.exists(pgpath)
 
         # set data if provided
@@ -92,7 +94,7 @@ class PGBash(object):
     def _do_pgbash(self, pgversion,data=1):
         env = os.environ
         # set OS environment
-        env['PATH'] =  os.path.join(conf["bin-prefix"], pgversion, 'bin') + ":" + env['PATH'] 
+        env['PATH'] =  os.path.join(conf["bin-prefix"], 'pgsql-' + pgversion, 'bin') + ":" + env['PATH'] 
         env['PS1']  = '''(%s-%s)[\u@\W]\$ ''' % (pgversion, str(data))
 
         port = 10000*data + 5432
